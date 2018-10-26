@@ -1,0 +1,612 @@
+ CREATE schema dota;
+set current_schema='dota';
+drop FOREIGN table if exists region;
+CREATE FOREIGN TABLE REGION
+(
+        like tpch.region
+)                    
+SERVER gsmpp_server 
+OPTIONS (
+        encoding 'utf8',
+        location 'obs://obs-dota/data/region.tbl',
+        format 'text',
+        delimiter '|',
+        access_key 'L0GLVZYJ0ZCXDHHICH8D',
+        secret_access_key 'x9ixihZl6ngQdZY7GSydSAPPj5CwQ8MQ9pnymCKx',
+        chunksize '64',
+        IGNORE_EXTRA_DATA 'on'
+);
+
+  CREATE schema dota;
+set current_schema='dota';
+drop FOREIGN table if exists ability_ids;
+CREATE FOREIGN TABLE ability_ids
+(
+ability_id int,
+ability_name VARCHAR2(100)
+        
+)
+SERVER gsmpp_server 
+OPTIONS (
+        encoding 'utf8',
+        location 'obs://obs-dota/data/dota-2-matches/ability_ids1.csv',
+        format 'text',
+        delimiter ',',
+        access_key 'L0GLVZYJ0ZCXDHHICH8D',
+        secret_access_key 'x9ixihZl6ngQdZY7GSydSAPPj5CwQ8MQ9pnymCKx',
+        chunksize '64',
+        IGNORE_EXTRA_DATA 'on'
+        header 'on'
+);
+
+
+
+create Sever obs_server FOREIGN DATA WRAPPER DFS_FDW options (ADDESSS '', access_key 'L0GLVZYJ0ZCXDHHICH8D',secret_access_key 'x9ixihZl6ngQdZY7GSydSAPPj5CwQ8MQ9pnymCKx',TYPE 'OBS')
+
+
+
+
+
+drop FOREIGN table if exists ability_upgrades;
+CREATE FOREIGN TABLE ability_upgrades
+(
+
+ability int,	
+level	int, 
+time  int,
+player_slot int,	
+match_id int
+
+)
+
+SERVER gsmpp_server 
+OPTIONS (
+        encoding 'utf8',
+        location 'obs://obs-dota/data/dota-2-matches/ability_upgrades.csv',
+        format 'text',
+        delimiter ',',
+        access_key 'L0GLVZYJ0ZCXDHHICH8D',
+        secret_access_key 'x9ixihZl6ngQdZY7GSydSAPPj5CwQ8MQ9pnymCKx',
+        chunksize '64',
+        IGNORE_EXTRA_DATA 'on',
+        header 'on'
+);
+
+
+
+drop FOREIGN table if exists chat;
+CREATE FOREIGN TABLE chat
+(
+match_id int,
+key	varchar2(100),
+slot int,
+time int,
+unit varchar(200)
+)
+
+SERVER gsmpp_server 
+OPTIONS (
+        encoding 'utf8',
+        location 'obs://obs-dota/data/dota-2-matches/chat.csv',
+        format 'csv',
+        delimiter ',',
+        access_key 'L0GLVZYJ0ZCXDHHICH8D',
+        secret_access_key 'x9ixihZl6ngQdZY7GSydSAPPj5CwQ8MQ9pnymCKx',
+        chunksize '64',
+        IGNORE_EXTRA_DATA 'on',
+        header 'on'
+);
+
+
+
+drop FOREIGN table if exists cluster_regions;
+CREATE FOREIGN TABLE cluster_regions
+(
+cluster int,	
+region varchar2(100)
+)
+
+SERVER gsmpp_server 
+OPTIONS (
+        encoding 'utf8',
+        location 'obs://obs-dota/data/dota-2-matches/cluster_regions.csv',
+        format 'csv',
+        delimiter ',',
+        access_key 'L0GLVZYJ0ZCXDHHICH8D',
+        secret_access_key 'x9ixihZl6ngQdZY7GSydSAPPj5CwQ8MQ9pnymCKx',
+        chunksize '64',
+        IGNORE_EXTRA_DATA 'on',
+        header 'on'
+);
+
+
+drop FOREIGN table if exists hero_names;
+CREATE FOREIGN TABLE hero_names
+(
+name varchar2(100),
+hero_id	int,
+localized_name varchar2(200)
+)
+
+SERVER gsmpp_server 
+OPTIONS (
+        encoding 'utf8',
+        location 'obs://obs-dota/data/dota-2-matches/hero_names.csv',
+        format 'csv',
+        delimiter ',',
+        access_key 'L0GLVZYJ0ZCXDHHICH8D',
+        secret_access_key 'x9ixihZl6ngQdZY7GSydSAPPj5CwQ8MQ9pnymCKx',
+        chunksize '64',
+        IGNORE_EXTRA_DATA 'on',
+        header 'on'
+);
+select * from hero_names;
+
+
+
+
+drop FOREIGN table if exists item_ids;
+CREATE FOREIGN TABLE item_ids
+(
+item_id int,
+item_name varchar2(200)
+)
+
+SERVER gsmpp_server 
+OPTIONS (
+        encoding 'utf8',
+        location 'obs://obs-dota/data/dota-2-matches/item_ids.csv',
+        format 'csv',
+        delimiter ',',
+        access_key 'L0GLVZYJ0ZCXDHHICH8D',
+        secret_access_key 'x9ixihZl6ngQdZY7GSydSAPPj5CwQ8MQ9pnymCKx',
+        chunksize '64',
+        IGNORE_EXTRA_DATA 'on',
+        header 'on'
+);
+select * from item_ids;
+
+
+
+drop FOREIGN table if exists match;
+CREATE FOREIGN TABLE match
+(
+match_id int,
+start_time text,
+duration	int,
+tower_status_radiant	int,
+tower_status_dire	int,
+barracks_status_dire	int,
+barracks_status_radiant	int,
+first_blood_time int,
+game_mode	int,
+radiant_win boolean,
+negative_votes int,
+positive_votes int,
+cluster int
+
+)
+
+SERVER gsmpp_server 
+OPTIONS (
+        encoding 'utf8',
+        location 'obs://obs-dota/data/dota-2-matches/match.csv',
+        format 'csv',
+        delimiter ',',
+        access_key 'L0GLVZYJ0ZCXDHHICH8D',
+        secret_access_key 'x9ixihZl6ngQdZY7GSydSAPPj5CwQ8MQ9pnymCKx',
+        chunksize '64',
+        IGNORE_EXTRA_DATA 'on',
+        header 'on'
+);
+select * from match;
+
+
+
+
+
+drop FOREIGN table if exists match_outcome;
+CREATE FOREIGN TABLE match_outcome
+(
+match_id decimal,
+account_id_0	float8,
+account_id_1	float8,
+account_id_2	float8,
+account_id_3	float8,
+account_id_4	float8,
+start_time	text,
+parser_version int,	
+win	int,
+rad int
+)
+
+SERVER gsmpp_server 
+OPTIONS (
+        encoding 'utf8',
+        location 'obs://obs-dota/data/dota-2-matches/match_outcome.csv',
+        format 'csv',
+        delimiter ',',
+        access_key 'L0GLVZYJ0ZCXDHHICH8D',
+        secret_access_key 'x9ixihZl6ngQdZY7GSydSAPPj5CwQ8MQ9pnymCKx',
+        chunksize '64',
+        IGNORE_EXTRA_DATA 'on',
+        header 'on'
+);
+select * from match_outcome;
+/*********** 没数据
+
+**********/
+
+
+
+drop FOREIGN table if exists objectives;
+CREATE FOREIGN TABLE objectives
+(
+match_id	int，
+key	int,
+player1	int，
+player2	int,
+slot text,
+subtype	varchar2(100),
+team	int,
+time	float,
+value int
+
+)
+
+SERVER gsmpp_server 
+OPTIONS (
+        encoding 'utf8',
+        location 'obs://obs-dota/data/dota-2-matches/objectives.csv',
+        format 'csv',
+        delimiter ',',
+        access_key 'L0GLVZYJ0ZCXDHHICH8D',
+        secret_access_key 'x9ixihZl6ngQdZY7GSydSAPPj5CwQ8MQ9pnymCKx',
+        chunksize '64',
+        IGNORE_EXTRA_DATA 'on',
+        header 'on'
+);
+select * from objectives;
+
+
+
+-------------
+可能分割符号问题
+---------------------------
+
+drop FOREIGN table if exists patch_dates;
+CREATE FOREIGN TABLE patch_dates
+(
+patch_date timestamp,
+name varchar2(100)
+
+)
+
+SERVER gsmpp_server 
+OPTIONS (
+        encoding 'utf8',
+        location 'obs://obs-dota/data/dota-2-matches/patch_dates.csv',
+        format 'csv',
+        delimiter ',',
+        access_key 'L0GLVZYJ0ZCXDHHICH8D',
+        secret_access_key 'x9ixihZl6ngQdZY7GSydSAPPj5CwQ8MQ9pnymCKx',
+        chunksize '64',
+        IGNORE_EXTRA_DATA 'on',
+        header 'on'
+);
+select * from patch_dates;
+
+
+
+drop FOREIGN table if exists player_ratings;
+CREATE FOREIGN TABLE player_ratings
+(
+account_id	float,
+total_wins	int,
+total_matches	int,
+trueskill_mu	float,
+trueskill_sigma float
+
+
+)
+
+SERVER gsmpp_server 
+OPTIONS (
+        encoding 'utf8',
+        location 'obs://obs-dota/data/dota-2-matches/player_ratings.csv',
+        format 'csv',
+        delimiter ',',
+        access_key 'L0GLVZYJ0ZCXDHHICH8D',
+        secret_access_key 'x9ixihZl6ngQdZY7GSydSAPPj5CwQ8MQ9pnymCKx',
+        chunksize '64',
+        IGNORE_EXTRA_DATA 'on',
+        header 'on'
+);
+select * from player_ratings;
+
+
+
+
+drop FOREIGN table if exists player_time;
+CREATE FOREIGN TABLE player_time
+(
+match_id	int,
+times	int,
+gold_t_0 int,	
+lh_t_0	int,
+xp_t_0	int,
+gold_t_1	int,
+lh_t_1	int,
+xp_t_1	int,
+gold_t_2	int,
+lh_t_2	int,
+xp_t_2	int,
+gold_t_3	int,
+lh_t_3	int,
+xp_t_3	int,
+gold_t_4	int,
+lh_t_4	int,
+xp_t_4	int,
+gold_t_128	int,
+lh_t_128	int,
+
+xp_t_128	int,
+gold_t_129	int,
+lh_t_129	int,
+xp_t_129	int,
+gold_t_130	int,
+lh_t_130	int,
+xp_t_130	int,
+gold_t_131	int,
+lh_t_131	int,
+xp_t_131	int,
+gold_t_132	int,
+lh_t_132	int,
+xp_t_132 int
+
+
+
+)
+
+SERVER gsmpp_server 
+OPTIONS (
+        encoding 'utf8',
+        location 'obs://obs-dota/data/dota-2-matches/player_time.csv',
+        format 'csv',
+        delimiter ',',
+        access_key 'L0GLVZYJ0ZCXDHHICH8D',
+        secret_access_key 'x9ixihZl6ngQdZY7GSydSAPPj5CwQ8MQ9pnymCKx',
+        chunksize '64',
+        IGNORE_EXTRA_DATA 'on',
+        header 'on'
+);
+select * from player_time;
+
+
+drop FOREIGN table if exists players;
+CREATE FOREIGN TABLE players
+(
+match_id	float,
+account_id	float,
+hero_id	float,
+player_slot	float,
+gold	float,
+gold_spent	float,
+gold_per_min	float,
+xp_per_min	float,
+kills	float,
+deaths	float,
+assists	float,
+denies	float,
+last_hits	float,
+stuns	text,
+hero_damage	float,
+hero_healing	float,
+tower_damage	float,
+item_0	float,
+item_1	float,
+item_2	float,
+item_3	float,
+item_4	float,
+item_5	float,
+level	float,
+leaver_status	float,
+xp_hero	text,
+xp_creep	float,
+xp_roshan	float,
+xp_other	float,
+gold_other	float,
+gold_death	float,
+gold_buyback	float,
+gold_abandon	float,
+gold_sell	float,
+gold_destroying_structure	float,
+gold_killing_heros	float,
+gold_killing_creeps	float,
+gold_killing_roshan	float,
+gold_killing_couriers	float,
+unit_order_none	float,
+unit_order_move_to_position	float,
+unit_order_move_to_target	float,
+unit_order_attack_move	float,
+unit_order_attack_target	float,
+unit_order_cast_position	float,
+unit_order_cast_target	float,
+unit_order_cast_target_tree	float,
+unit_order_cast_no_target	float,
+unit_order_cast_toggle	float,
+unit_order_hold_position	float,
+unit_order_train_ability	float,
+unit_order_drop_item	float,
+unit_order_give_item	float,
+unit_order_pickup_item	float,
+unit_order_pickup_rune	float,
+unit_order_purchase_item	float,
+unit_order_sell_item	float,
+unit_order_disassemble_item	float,
+unit_order_move_item	float,
+unit_order_cast_toggle_auto	float,
+unit_order_stop	float,
+unit_order_taunt	float,
+unit_order_buyback	float,
+unit_order_glyph	float,
+unit_order_eject_item_from_stash	float,
+unit_order_cast_rune	float,
+unit_order_ping_ability	float,
+unit_order_move_to_direction	float,
+unit_order_patrol	float,
+unit_order_vector_target_position	float,
+unit_order_radar	float,
+unit_order_set_item_combine_lock	float,
+unit_order_continue float
+
+
+)
+
+SERVER gsmpp_server 
+OPTIONS (
+        encoding 'utf8',
+        location 'obs://obs-dota/data/dota-2-matches/players.csv',
+        format 'csv',
+        delimiter ',',
+        access_key 'L0GLVZYJ0ZCXDHHICH8D',
+        secret_access_key 'x9ixihZl6ngQdZY7GSydSAPPj5CwQ8MQ9pnymCKx',
+        chunksize '64',
+        IGNORE_EXTRA_DATA 'on',
+        header 'on'
+);
+select * from players;
+
+
+
+drop FOREIGN table if exists purchase_log;
+CREATE FOREIGN TABLE purchase_log
+(
+item_id	 int,
+time	int,
+player_slot int,	
+match_id int
+
+
+
+)
+
+SERVER gsmpp_server 
+OPTIONS (
+        encoding 'utf8',
+        location 'obs://obs-dota/data/dota-2-matches/purchase_log.csv',
+        format 'csv',
+        delimiter ',',
+        access_key 'L0GLVZYJ0ZCXDHHICH8D',
+        secret_access_key 'x9ixihZl6ngQdZY7GSydSAPPj5CwQ8MQ9pnymCKx',
+        chunksize '64',
+        IGNORE_EXTRA_DATA 'on',
+        header 'on'
+);
+select * from purchase_log;
+
+
+drop FOREIGN table if exists teamfights;
+CREATE FOREIGN TABLE teamfights
+(
+match_id int , 
+start int , 
+eend	int, 
+last_death int,	 
+deaths int
+)
+
+SERVER gsmpp_server 
+OPTIONS (
+        encoding 'utf8',
+        location 'obs://obs-dota/data/dota-2-matches/teamfights.csv',
+        format 'csv',
+        delimiter ',',
+        access_key 'L0GLVZYJ0ZCXDHHICH8D',
+        secret_access_key 'x9ixihZl6ngQdZY7GSydSAPPj5CwQ8MQ9pnymCKx',
+        chunksize '64',
+        IGNORE_EXTRA_DATA 'on',
+        header 'on'
+);
+select * from teamfights;
+
+
+drop FOREIGN table if exists teamfights_players;
+CREATE FOREIGN TABLE teamfights_players
+(
+match_id int	
+player_slot	int，
+buybacks	int，
+damage	int，
+deaths	int，
+gold_delta	int，
+xp_end	int，
+xp_start int
+
+)
+
+SERVER gsmpp_server 
+OPTIONS (
+        encoding 'utf8',
+        location 'obs://obs-dota/data/dota-2-matches/teamfights_players.csv',
+        format 'csv',
+        delimiter ',',
+        access_key 'L0GLVZYJ0ZCXDHHICH8D',
+        secret_access_key 'x9ixihZl6ngQdZY7GSydSAPPj5CwQ8MQ9pnymCKx',
+        chunksize '64',
+        IGNORE_EXTRA_DATA 'on',
+        header 'on'
+);
+select * from teamfights_players;
+
+
+
+drop FOREIGN table if exists test_labels;
+CREATE FOREIGN TABLE test_labels
+(
+match_id	int,
+radiant_win int
+
+
+)
+
+SERVER gsmpp_server 
+OPTIONS (
+        encoding 'utf8',
+        location 'obs://obs-dota/data/dota-2-matches/test_labels.csv',
+        format 'csv',
+        delimiter ',',
+        access_key 'L0GLVZYJ0ZCXDHHICH8D',
+        secret_access_key 'x9ixihZl6ngQdZY7GSydSAPPj5CwQ8MQ9pnymCKx',
+        chunksize '64',
+        IGNORE_EXTRA_DATA 'on',
+        header 'on'
+);
+select * from test_labels;
+
+
+
+
+
+drop FOREIGN table if exists test_player;
+CREATE FOREIGN TABLE test_player
+(
+match_id	int,
+account_id int,	
+hero_id	int,
+player_slot int
+)
+
+SERVER gsmpp_server 
+OPTIONS (
+        encoding 'utf8',
+        location 'obs://obs-dota/data/dota-2-matches/test_player.csv',
+        format 'csv',
+        delimiter ',',
+        access_key 'L0GLVZYJ0ZCXDHHICH8D',
+        secret_access_key 'x9ixihZl6ngQdZY7GSydSAPPj5CwQ8MQ9pnymCKx',
+        chunksize '64',
+        IGNORE_EXTRA_DATA 'on',
+        header 'on'
+);
+select * from test_player;
